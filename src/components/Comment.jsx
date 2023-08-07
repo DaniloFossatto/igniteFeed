@@ -13,7 +13,7 @@ export function Comment(){
                             <strong>Danilo Fossatto</strong>
                             <time title='06 de agosto às 08:13h' dateTime='2023-08-06 08:13:30'>Cerca de 1h atrás</time>
                         </div>
-                        <button title='Deletar Comentário'><Trash size={20}/></button>
+                        <button title='Deletar Comentário'><Trash size={24}/></button>
                     </header>
 
                     Muito bom Devon, parabéns!! 👏👏
