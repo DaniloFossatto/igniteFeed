@@ -25,6 +25,7 @@ export function Post({author, publishedAt, content}){
         addSuffix: true,
     })
     function handleNewCommentChange(){
+        event.target.setCustomValidity('')
         setCommentText(event.target.value)
     }
     function handleCreateNewComment(){
@@ -32,9 +33,19 @@ export function Post({author, publishedAt, content}){
         setComments([...comments, commentText])
         setCommentText('')
     }
-    function deleteComment(comment){
-
+    function deleteComment(commentToDelete){
+        const commentsWithoutDeletedOne = comments.filter(comment =>{
+            return comment != commentToDelete
+        })
+        setComments(commentsWithoutDeletedOne)
+        
     }
+    function handleNemCommentInvalid(){
+        event.target.setCustomValidity('Esse campo é obrigatório!')
+    }
+
+    const isCommentEmpty = commentText.length == 0 
+
     return(
         <article className={styles.post}>
             <header>
@@ -60,15 +71,15 @@ export function Post({author, publishedAt, content}){
         </div>
         <form onSubmit={handleCreateNewComment} className={styles.commentForm}>
             <strong>Deixe seu feedback</strong>
-            <textarea onChange={handleNewCommentChange} name='comment' placeholder='Deixe um comentário' value={commentText}></textarea>
+            <textarea onChange={handleNewCommentChange} name='comment' placeholder='Deixe um comentário' value={commentText} required="true" onInvalid={handleNemCommentInvalid}></textarea>
             <footer>
-                <button  type='submit'>Publicar</button>
+                <button disabled={isCommentEmpty}  type='submit'>Publicar</button>
             </footer>
         </form>
 
         <div className={styles.commentList}>
             {comments.map(comment => {
-                return <Comment key={comment} content={comment} deleteComment={deleteComment} />
+                return <Comment key={comment} content={comment} onDeleteComment={deleteComment} />
             })}
         </div>
         </article>
